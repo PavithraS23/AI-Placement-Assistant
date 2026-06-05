@@ -116,5 +116,6 @@ Answer:
         st.session_state.messages.append(
             {"role": "assistant", "content": answer}
         )
+
 else:
     st.info("Upload a PDF first.")
