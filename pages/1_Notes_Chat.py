@@ -1,44 +1,6 @@
-st.markdown("""
-<style>
-.stApp {
-    background: radial-gradient(circle at top, #1a102b 0%, #050505 45%, #000000 100%);
-    color: white;
-}
-
-h1, h2, h3, p, label {
-    color: white;
-}
-
-.stButton > button {
-    background-color: rgba(20, 20, 30, 0.95);
-    color: white;
-    border: 1px solid #a855f7;
-    border-radius: 10px;
-}
-
-.stButton > button:hover {
-    background-color: #1f1033;
-    color: #c084fc;
-    border-color: #c084fc;
-}
-
-.stTextInput input {
-    background-color: #111111;
-    color: white;
-    border: 1px solid #a855f7;
-}
-
-[data-testid="stFileUploader"] {
-    background-color: #111111;
-    border: 1px solid #a855f7;
-    border-radius: 10px;
-}
-</style>
-""", unsafe_allow_html=True)
 import streamlit as st
 import tempfile
 import os
-
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_google_genai import ChatGoogleGenerativeAI
 
@@ -51,31 +13,31 @@ st.markdown("""
     color: white;
 }
 
+.block-container {
+    max-width: 1000px;
+    margin: auto;
+    padding-top: 45px;
+}
+
 h1, h2, h3, p, label {
-    color: #22c55e;
+    color: white;
 }
 
 .stButton > button {
-    background-color: #0a0a0a;
-    color: #22c55e;
-    border: 1px solid #22c55e;
+    background-color: #11111b;
+    color: white;
+    border: 1px solid #a855f7;
     border-radius: 10px;
 }
 
 .stButton > button:hover {
-    background-color: #052e16;
-    color: white;
-}
-
-.stTextInput input {
-    background-color: #111111;
-    color: white;
-    border: 1px solid #22c55e;
+    background-color: #211033;
+    color: #c084fc;
 }
 
 [data-testid="stFileUploader"] {
     background-color: #111111;
-    border: 1px solid #22c55e;
+    border: 1px solid #a855f7;
     border-radius: 10px;
 }
 </style>
@@ -154,6 +116,5 @@ Answer:
         st.session_state.messages.append(
             {"role": "assistant", "content": answer}
         )
-
 else:
     st.info("Upload a PDF first.")
