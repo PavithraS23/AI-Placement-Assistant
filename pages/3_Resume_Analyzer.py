@@ -48,7 +48,11 @@ st.title("Resume Analyzer")
 if st.button("Back to Home"):
     st.switch_page("app.py")
 
-os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+try:
+    os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+except Exception:
+    st.error("Gemini API key is missing. Add GOOGLE_API_KEY in Streamlit Secrets.")
+    st.stop()
 
 llm = ChatGoogleGenerativeAI(
     model="gemini-2.5-flash",
@@ -62,20 +66,29 @@ if resume:
         temp_file.write(resume.read())
         resume_path = temp_file.name
 
-    loader = PyPDFLoader(resume_path)
-    documents = loader.load()
+    try:
+        loader = PyPDFLoader(resume_path)
+        documents = loader.load()
 
-    resume_text = "\n".join(
-        [doc.page_content for doc in documents]
-    )
+        resume_text = "\n".join(
+            [doc.page_content for doc in documents]
+        )
 
-    if st.button("Analyze Resume"):
-        prompt = f"""
+        if len(resume_text.strip()) == 0:
+            st.error("Could not extract text from this PDF. Please upload a text-based resume PDF.")
+            st.stop()
+
+        st.success("Resume uploaded successfully.")
+
+        if st.button("Analyze Resume"):
+            limited_resume_text = resume_text[:8000]
+
+            prompt = f"""
 You are an expert placement and resume advisor.
 
 Analyze this resume professionally.
 
-Give the output in this format:
+Give the output in this exact format:
 
 1. Profile Summary
 
@@ -99,20 +112,32 @@ Give the output in this format:
 9. Interview Questions Based on Resume
 
 Resume:
-{resume_text}
+{limited_resume_text}
 """
 
-        with st.spinner("Analyzing resume..."):
-            response = llm.invoke(prompt)
+            try:
+                with st.spinner("Analyzing resume..."):
+                    response = llm.invoke(prompt)
 
-        resume_analysis = response.content
+                resume_analysis = response.content
 
-        st.subheader("Resume Analysis")
-        st.write(resume_analysis)
+                st.subheader("Resume Analysis")
+                st.write(resume_analysis)
 
-        st.download_button(
-            label="Download Resume Analysis",
-            data=resume_analysis,
-            file_name="resume_analysis.txt",
-            mime="text/plain"
-        )
+                st.download_button(
+                    label="Download Resume Analysis",
+                    data=resume_analysis,
+                    file_name="resume_analysis.txt",
+                    mime="text/plain"
+                )
+
+            except Exception as e:
+                st.error("Resume analysis failed. Please try again.")
+                st.write(str(e))
+
+    except Exception as e:
+        st.error("Failed to read the resume PDF.")
+        st.write(str(e))
+
+else:
+    st.info("Upload your resume PDF to begin analysis.")
