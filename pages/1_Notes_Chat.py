@@ -12,44 +12,57 @@ st.title("Notes Chat")
 if st.button("Back to Home"):
     st.switch_page("app.py")
 
-os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+# Check secret
+try:
+    os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+    st.success("API key loaded")
+except Exception as e:
+    st.error(f"API key error: {e}")
 
-llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
-    temperature=0.2
-)
+# Check Gemini
+try:
+    llm = ChatGoogleGenerativeAI(
+        model="gemini-2.5-flash",
+        temperature=0.2
+    )
+    st.success("Gemini model loaded")
+except Exception as e:
+    st.error(f"Gemini loading error: {e}")
 
 uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
 
-if "pdf_text" not in st.session_state:
-    st.session_state.pdf_text = ""
+if uploaded_file:
+    st.success("PDF uploaded")
 
-if uploaded_file and st.session_state.pdf_text == "":
-    with st.spinner("Reading PDF..."):
+    try:
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
             temp_file.write(uploaded_file.read())
             pdf_path = temp_file.name
 
+        st.write("Temporary file created")
+
         loader = PyPDFLoader(pdf_path)
         documents = loader.load()
 
-        st.session_state.pdf_text = "\n".join(
-            [doc.page_content for doc in documents]
-        )
+        st.success(f"PDF read successfully. Pages: {len(documents)}")
 
-    st.success("PDF uploaded and read successfully.")
+        pdf_text = "\n".join([doc.page_content for doc in documents])
 
-if st.session_state.pdf_text:
-    query = st.text_input("Ask a question from your PDF")
+        st.write("Extracted text length:", len(pdf_text))
 
-    if st.button("Get Answer"):
-        prompt = f"""
-You are an AI Placement Assistant.
+        st.text_area("PDF Preview", pdf_text[:2000], height=250)
 
-Use only the PDF content below to answer.
+        query = st.text_input("Ask a question")
+
+        if st.button("Get Answer"):
+            if query.strip() == "":
+                st.warning("Please enter a question")
+            else:
+                prompt = f"""
+Use the PDF content below to answer.
 
 PDF Content:
-{st.session_state.pdf_text[:12000]}
+{pdf_text[:12000]}
 
 Question:
 {query}
@@ -57,9 +70,12 @@ Question:
 Answer:
 """
 
-        with st.spinner("Generating answer..."):
-            response = llm.invoke(prompt)
+                response = llm.invoke(prompt)
 
-        st.write(response.content)
+                st.subheader("Answer")
+                st.write(response.content)
+
+    except Exception as e:
+        st.error(f"PDF processing error: {e}")
 else:
-    st.info("Upload a PDF first.")
+    st.info("Upload a PDF first")
