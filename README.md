@@ -1,130 +1,101 @@
 # AI Placement Assistant
 
-AI Placement Assistant is a Generative AI application designed to help students prepare for placements through document-based question answering, quiz generation, resume analysis, and AI-powered mock interviews.
+An AI-powered placement preparation platform built using Streamlit and Google Gemini. The application helps students prepare for placements through document-based learning, quiz generation, resume analysis, and mock interview practice.
 
 ## Features
 
 ### Notes Chat
-
-* Upload study materials and PDFs
-* Ask questions from uploaded documents
-* Retrieval-Augmented Generation (RAG) based responses
-* Context-aware answers using Gemini AI
+- Upload PDF documents
+- Ask questions from notes and study materials
+- Generate summaries and explanations
+- AI-powered document interaction
 
 ### Quiz Generator
-
-* Generate multiple-choice questions
-* Choose difficulty levels
-* Create practice tests instantly
+- Generate Multiple Choice Questions (MCQs)
+- Generate Interview Questions
+- Generate Aptitude Questions
+- Select difficulty levels
+- Download generated quizzes
 
 ### Resume Analyzer
-
-* Analyze resumes
-* Identify strengths and skill gaps
-* Suggest improvements and career recommendations
+- ATS Score Evaluation
+- Technical Skill Assessment
+- Placement Readiness Analysis
+- Skill Gap Identification
+- Resume Improvement Suggestions
+- Recommended Projects and Roles
 
 ### Mock Interview
+- Role-based interview questions
+- AI-generated feedback
+- Answer evaluation and scoring
+- Personalized interview preparation
 
-* Role-based interview practice
-* AI-generated technical and HR questions
-* Interactive interview experience
+## Tech Stack
 
----
-
-## Technology Stack
-
-### Frontend
-
-* Streamlit
-
-### Generative AI
-
-* Gemini 2.5 Flash
-
-### Framework
-
-* LangChain
-
-### Vector Database
-
-* ChromaDB
-
-### Embeddings
-
-* Gemini Embeddings
-
-### PDF Processing
-
-* PyPDF
-
----
+- Python
+- Streamlit
+- Google Gemini API
+- LangChain
+- PyPDF
 
 ## Project Structure
 
-AI-Placement-Assistant/
-
+```text
+AI-Placement-Assistant
+│
 ├── app.py
-
 ├── requirements.txt
-
-├── README.md
-
-├── pages/
-
-│   ├── 1_Notes_Chat.py
-
-│   ├── 2_Quiz_Generator.py
-
-│   ├── 3_Resume_Analyzer.py
-
-│   └── 4_Mock_Interview.py
-
----
+│
+└── pages
+    ├── 1_Notes_Chat.py
+    ├── 2_Quiz_Generator.py
+    ├── 3_Resume_Analyzer.py
+    └── 4_Mock_Interview.py
+```
 
 ## Installation
 
-Clone the repository:
-
-git clone <repository-url>
+```bash
+git clone https://github.com/your-username/AI-Placement-Assistant.git
 
 cd AI-Placement-Assistant
 
-Install dependencies:
-
 pip install -r requirements.txt
-
----
+```
 
 ## Configure API Key
 
-Create a .env file:
+Create:
 
-GOOGLE_API_KEY=YOUR_API_KEY
+```text
+.streamlit/secrets.toml
+```
 
-Or add the key through Streamlit Secrets during deployment.
+Add:
 
----
+```toml
+GOOGLE_API_KEY = "YOUR_API_KEY"
+```
 
 ## Run Application
 
+```bash
 streamlit run app.py
-
----
+```
 
 ## Future Enhancements
 
-* Placement Readiness Score
-* ATS Resume Scoring
-* Personalized Learning Roadmaps
-* Interview Performance Evaluation
-* Multi-PDF Knowledge Base
-* Progress Tracking Dashboard
-
----
+- Vector Database Integration
+- RAG-based Question Answering
+- Voice-based Interviews
+- Progress Tracking Dashboard
+- Learning Roadmaps
+- User Authentication
 
 ## Author
 
-Pavithra Senthilkumaran
+**Pavithra Senthilkumaran**
 
 B.Tech Artificial Intelligence and Data Science
 
