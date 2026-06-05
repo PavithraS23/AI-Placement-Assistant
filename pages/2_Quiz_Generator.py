@@ -4,6 +4,37 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 st.set_page_config(page_title="Quiz Generator", layout="wide")
 
+st.markdown("""
+<style>
+.stApp {
+    background-color: #000000;
+    color: white;
+}
+
+h1, h2, h3, p, label {
+    color: #22c55e;
+}
+
+.stButton > button {
+    background-color: #0a0a0a;
+    color: #22c55e;
+    border: 1px solid #22c55e;
+    border-radius: 10px;
+}
+
+.stButton > button:hover {
+    background-color: #052e16;
+    color: white;
+}
+
+.stTextInput input {
+    background-color: #111111;
+    color: white;
+    border: 1px solid #22c55e;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.title("Quiz Generator")
 
 if st.button("Back to Home"):
@@ -47,7 +78,7 @@ if st.button("Generate Quiz"):
         prompt = f"""
 You are an AI Placement Preparation Assistant.
 
-Generate a quiz based on the following details:
+Generate a quiz.
 
 Topic: {topic}
 Difficulty: {difficulty}
@@ -55,11 +86,10 @@ Number of Questions: {number}
 Question Type: {quiz_type}
 
 Rules:
-- Use clear and simple language.
-- Number each question properly.
+- Number each question.
 - If MCQ, give 4 options.
-- Mention the correct answer.
-- Give a short explanation for each answer.
+- Give the correct answer.
+- Give a short explanation.
 - Make it suitable for placement preparation.
 """
 
