@@ -1,135 +1,87 @@
 import streamlit as st
 
-st.set_page_config(
-    page_title="AI Placement Assistant",
-    layout="wide"
-)
+st.set_page_config(page_title="AI Placement Assistant", layout="wide")
 
 st.markdown("""
 <style>
-
-.stApp{
-    background-color:#0b1220;
+.stApp {
+    background-color: #000000;
 }
 
-[data-testid="stSidebar"]{
-    display:none;
+[data-testid="stSidebar"] {
+    display: none;
 }
 
-h1,h2,h3,p{
-    color:white;
+.main-title {
+    text-align: center;
+    color: #22c55e;
+    font-size: 54px;
+    font-weight: 800;
+    margin-top: 60px;
 }
 
-.tool-card{
-    background:#111827;
-    border:1px solid #16a34a;
-    border-radius:12px;
-    padding:25px;
-    text-align:center;
-    margin-bottom:20px;
+.subtitle {
+    text-align: center;
+    color: #86efac;
+    font-size: 18px;
+    margin-bottom: 50px;
 }
 
-.tool-title{
-    font-size:24px;
-    font-weight:600;
-    color:white;
+.start-title {
+    text-align: center;
+    color: #22c55e;
+    font-size: 26px;
+    margin-bottom: 25px;
 }
 
-.tool-desc{
-    font-size:15px;
-    color:#d1d5db;
+.stButton > button {
+    height: 120px;
+    width: 100%;
+    background-color: #0a0a0a;
+    color: #22c55e;
+    border: 1px solid #22c55e;
+    border-radius: 14px;
+    font-size: 22px;
+    font-weight: 700;
 }
 
-.stButton > button{
-    width:100%;
-    height:120px;
-    background-color:#111827;
-    border:1px solid #16a34a;
-    border-radius:12px;
-    color:white;
-    font-size:20px;
+.stButton > button:hover {
+    background-color: #052e16;
+    color: white;
+    border-color: #22c55e;
 }
-
-.stButton > button:hover{
-    border-color:#22c55e;
-}
-
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown(
-"""
-<h1 style='text-align:center;'>
-AI Placement Assistant
-</h1>
-""",
-unsafe_allow_html=True
-)
+st.markdown("<div class='main-title'>AI Placement Assistant</div>", unsafe_allow_html=True)
 
-st.markdown(
-"""
-<p style='text-align:center;font-size:18px;'>
-Your AI-powered companion for placement preparation,
-career development and interview success.
-</p>
-""",
-unsafe_allow_html=True
-)
+st.markdown("""
+<div class='subtitle'>
+Your AI-powered assistant for placement preparation, resume improvement, document learning and interview practice.
+</div>
+""", unsafe_allow_html=True)
 
-st.write("")
-st.write("")
+st.markdown("<div class='start-title'>Let's Get Started</div>", unsafe_allow_html=True)
 
-st.markdown(
-"""
-<h3 style='text-align:center;'>
-Let's Get Started
-</h3>
-""",
-unsafe_allow_html=True
-)
-
-st.write("")
-
-left, center, right = st.columns([1,4,1])
+left, center, right = st.columns([1, 4, 1])
 
 with center:
-
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button(
-            "Notes Chat",
-            use_container_width=True
-        ):
-            st.switch_page(
-                "pages/1_Notes_Chat.py"
-            )
+        if st.button("Notes Chat"):
+            st.switch_page("pages/1_Notes_Chat.py")
 
     with col2:
-        if st.button(
-            "Quiz Generator",
-            use_container_width=True
-        ):
-            st.switch_page(
-                "pages/2_Quiz_Generator.py"
-            )
+        if st.button("Quiz Generator"):
+            st.switch_page("pages/2_Quiz_Generator.py")
 
     col3, col4 = st.columns(2)
 
     with col3:
-        if st.button(
-            "Resume Analyzer",
-            use_container_width=True
-        ):
-            st.switch_page(
-                "pages/3_Resume_Analyzer.py"
-            )
+        if st.button("Resume Analyzer"):
+            st.switch_page("pages/3_Resume_Analyzer.py")
 
     with col4:
-        if st.button(
-            "Mock Interview",
-            use_container_width=True
-        ):
-            st.switch_page(
-                "pages/4_Mock_Interview.py"
-            )
+        if st.button("Mock Interview"):
+            st.switch_page("pages/4_Mock_Interview.py")
