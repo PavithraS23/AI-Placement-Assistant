@@ -96,5 +96,14 @@ Rules:
         with st.spinner("Generating quiz..."):
             response = llm.invoke(prompt)
 
+        quiz_output = response.content
+
         st.subheader("Generated Quiz")
-        st.write(response.content)
+        st.write(quiz_output)
+
+        st.download_button(
+            label="Download Quiz",
+            data=quiz_output,
+            file_name="generated_quiz.txt",
+            mime="text/plain"
+        )
