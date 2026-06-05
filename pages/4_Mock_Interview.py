@@ -63,21 +63,69 @@ level = st.selectbox(
     ["Beginner", "Intermediate", "Advanced"]
 )
 
-if st.button("Generate Interview Questions"):
+if "interview_question" not in st.session_state:
+    st.session_state.interview_question = ""
+
+if st.button("Generate Question"):
     prompt = f"""
-Generate 10 mock interview questions for the role: {role}
+Generate one interview question for the role: {role}
 
 Candidate level: {level}
 
-Include:
-1. Technical questions
-2. HR questions
-3. Project-based questions
-4. Short ideal answer for each question
+The question should be suitable for placement preparation.
+Do not give answer.
 """
 
-    with st.spinner("Preparing interview questions..."):
+    with st.spinner("Generating question..."):
         response = llm.invoke(prompt)
 
-    st.subheader("Interview Questions")
-    st.write(response.content)
+    st.session_state.interview_question = response.content
+
+if st.session_state.interview_question:
+    st.subheader("Interview Question")
+    st.write(st.session_state.interview_question)
+
+    user_answer = st.text_area(
+        "Type your answer here",
+        height=180
+    )
+
+    if st.button("Evaluate My Answer"):
+        if user_answer.strip() == "":
+            st.warning("Please type your answer first.")
+        else:
+            feedback_prompt = f"""
+You are an expert interview evaluator.
+
+Role: {role}
+Level: {level}
+
+Interview Question:
+{st.session_state.interview_question}
+
+Candidate Answer:
+{user_answer}
+
+Evaluate the answer and give:
+
+1. Score out of 10
+2. Strengths in the answer
+3. Mistakes or missing points
+4. Improved ideal answer
+5. Final interview tip
+"""
+
+            with st.spinner("Evaluating answer..."):
+                feedback = llm.invoke(feedback_prompt)
+
+            feedback_output = feedback.content
+
+            st.subheader("Feedback")
+            st.write(feedback_output)
+
+            st.download_button(
+                label="Download Feedback",
+                data=feedback_output,
+                file_name="interview_feedback.txt",
+                mime="text/plain"
+            )
