@@ -73,17 +73,30 @@ if resume:
         prompt = f"""
 You are an expert placement and resume advisor.
 
-Analyze this resume.
+Analyze this resume professionally.
 
-Give:
-1. Short profile summary
-2. Strong skills
-3. Weak areas
-4. Missing skills for placements
-5. Suitable job roles
-6. Project suggestions
-7. Resume improvement tips
-8. Interview questions based on this resume
+Give the output in this format:
+
+1. Profile Summary
+
+2. Scores
+- ATS Score out of 100
+- Technical Skill Score out of 100
+- Placement Readiness Score out of 100
+
+3. Strengths
+
+4. Weak Areas
+
+5. Missing Skills for Placements
+
+6. Suitable Job Roles
+
+7. Recommended Projects
+
+8. Resume Improvement Tips
+
+9. Interview Questions Based on Resume
 
 Resume:
 {resume_text}
@@ -92,5 +105,14 @@ Resume:
         with st.spinner("Analyzing resume..."):
             response = llm.invoke(prompt)
 
+        resume_analysis = response.content
+
         st.subheader("Resume Analysis")
-        st.write(response.content)
+        st.write(resume_analysis)
+
+        st.download_button(
+            label="Download Resume Analysis",
+            data=resume_analysis,
+            file_name="resume_analysis.txt",
+            mime="text/plain"
+        )
