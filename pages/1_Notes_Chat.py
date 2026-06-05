@@ -19,10 +19,13 @@ llm = ChatGoogleGenerativeAI(
     temperature=0.2
 )
 
-uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
-
 if "pdf_text" not in st.session_state:
     st.session_state.pdf_text = ""
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+uploaded_file = st.file_uploader("Upload PDF", type=["pdf"])
 
 if uploaded_file and st.session_state.pdf_text == "":
     with st.spinner("Reading PDF..."):
@@ -40,16 +43,21 @@ if uploaded_file and st.session_state.pdf_text == "":
     st.success("PDF processed successfully.")
 
 if st.session_state.pdf_text:
-    st.write("PDF is ready. Ask your question below.")
+    for msg in st.session_state.messages:
+        with st.chat_message(msg["role"]):
+            st.write(msg["content"])
 
-    query = st.text_input("Ask a question")
+    query = st.chat_input("Ask a question from your PDF")
 
-    if st.button("Get Answer"):
-        if query.strip() == "":
-            st.warning("Please enter a question.")
-        else:
-            with st.spinner("Generating answer..."):
-                prompt = f"""
+    if query:
+        st.session_state.messages.append(
+            {"role": "user", "content": query}
+        )
+
+        with st.chat_message("user"):
+            st.write(query)
+
+        prompt = f"""
 You are an AI Placement Assistant.
 
 Use only the PDF content below to answer.
@@ -62,9 +70,16 @@ Question:
 
 Answer:
 """
-                response = llm.invoke(prompt)
 
-            st.subheader("Answer")
-            st.write(response.content)
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                response = llm.invoke(prompt)
+                answer = response.content
+                st.write(answer)
+
+        st.session_state.messages.append(
+            {"role": "assistant", "content": answer}
+        )
+
 else:
     st.info("Upload a PDF first.")
