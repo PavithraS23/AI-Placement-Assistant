@@ -1,14 +1,7 @@
-streamlit>=1.45.0
-
-langchain
+streamlit
 langchain-community
 langchain-google-genai
 langchain-text-splitters
-
 chromadb
-
 pypdf
-
 google-generativeai
-
-python-dotenv
