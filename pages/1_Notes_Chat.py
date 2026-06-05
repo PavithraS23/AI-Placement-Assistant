@@ -7,6 +7,43 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 st.set_page_config(page_title="Notes Chat", layout="wide")
 
+st.markdown("""
+<style>
+.stApp {
+    background-color: #000000;
+    color: white;
+}
+
+h1, h2, h3, p, label {
+    color: #22c55e;
+}
+
+.stButton > button {
+    background-color: #0a0a0a;
+    color: #22c55e;
+    border: 1px solid #22c55e;
+    border-radius: 10px;
+}
+
+.stButton > button:hover {
+    background-color: #052e16;
+    color: white;
+}
+
+.stTextInput input {
+    background-color: #111111;
+    color: white;
+    border: 1px solid #22c55e;
+}
+
+[data-testid="stFileUploader"] {
+    background-color: #111111;
+    border: 1px solid #22c55e;
+    border-radius: 10px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.title("Notes Chat")
 
 if st.button("Back to Home"):
