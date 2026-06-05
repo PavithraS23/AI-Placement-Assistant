@@ -5,7 +5,7 @@ st.set_page_config(page_title="AI Placement Assistant", layout="wide")
 st.markdown("""
 <style>
 .stApp {
-    background-color: #000000;
+    background: radial-gradient(circle at top, #1a102b 0%, #050505 45%, #000000 100%);
 }
 
 [data-testid="stSidebar"] {
@@ -14,52 +14,60 @@ st.markdown("""
 
 .main-title {
     text-align: center;
-    color: #22c55e;
-    font-size: 54px;
+    color: white;
+    font-size: 58px;
     font-weight: 800;
-    margin-top: 60px;
+    margin-top: 40px;
+}
+
+.main-title span {
+    color: #a855f7;
 }
 
 .subtitle {
     text-align: center;
-    color: #86efac;
+    color: #d1d5db;
     font-size: 18px;
-    margin-bottom: 50px;
+    margin-bottom: 45px;
 }
 
 .start-title {
     text-align: center;
-    color: #22c55e;
-    font-size: 26px;
+    color: #a855f7;
+    font-size: 28px;
+    font-weight: 700;
     margin-bottom: 25px;
 }
 
 .stButton > button {
-    height: 120px;
+    height: 150px;
     width: 100%;
-    background-color: #0a0a0a;
-    color: #22c55e;
-    border: 1px solid #22c55e;
-    border-radius: 14px;
-    font-size: 22px;
+    background-color: rgba(20, 20, 30, 0.95);
+    color: white;
+    border: 1px solid #a855f7;
+    border-radius: 18px;
+    font-size: 24px;
     font-weight: 700;
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.25);
 }
 
 .stButton > button:hover {
-    background-color: #052e16;
-    color: white;
-    border-color: #22c55e;
+    background-color: #1f1033;
+    border: 1px solid #c084fc;
+    color: #c084fc;
 }
 </style>
 """, unsafe_allow_html=True)
 
-st.markdown("<div class='main-title'>AI Placement Assistant</div>", unsafe_allow_html=True)
+st.markdown(
+    "<div class='main-title'>AI Placement <span>Assistant</span></div>",
+    unsafe_allow_html=True
+)
 
-st.markdown("""
-<div class='subtitle'>
-Your AI-powered assistant for placement preparation, resume improvement, document learning and interview practice.
-</div>
-""", unsafe_allow_html=True)
+st.markdown(
+    "<div class='subtitle'>Your AI-powered assistant for placement preparation, resume improvement, document learning and interview practice.</div>",
+    unsafe_allow_html=True
+)
 
 st.markdown("<div class='start-title'>Let's Get Started</div>", unsafe_allow_html=True)
 
